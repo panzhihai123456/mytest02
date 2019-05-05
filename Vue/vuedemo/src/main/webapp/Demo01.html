@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue在页面的展示</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<!--使用vue，对message赋值，并把值显示到页面中, 插值表达式-->
+<div id="app">
+    显示为：{{add>2?true:false}}
+</div>
+<!--点击事件-->
+<div id="fun">
+    显示：{{message}}
+    <input type="button" value="变化起来" @click="fun01()">
+</div>
+<!--键盘点击事件-->
+<div id="keydown"> 
+     请输入数字：<input type="text"  @keydown="fun02($event)">
+</div>
+<!--阻止事件的派发，和鼠标移入事件 -->
+<div id="show">
+    <div style="border: solid 1px red ;width: 400px;height: 200px" @mouseover="fun03()">
+        aaaa
+        <textarea @mouseover="fun04($event)">你们牛逼</textarea>
+    </div>
+</div>
+
+<div id="a">
+    <!--@click.prevent 阻止事件的发生-->
+    <form action="http://www.baidu.com" method="post" @click.prevent>
+        <input type="submit" value="跳转">
+    </form>
+    <from @click="fun04">
+        <a href="http://www.baidu.com" @click.stop>百度</a>
+    </from>
+</div>
+
+<div id="text">
+    请输入文本框内容<input type="text" @keydown.enter="fun05"/>
+</div>
+<!--v-html 和v-text的区别-->
+<div id="el">
+    <div v-html="message">html</div>
+    <div v-text="message">text</div>
+    <div></div>
+</div>
+
+<!--使用v-bind对页面属性进赋值-->
+<div id="bind">
+    <a v-bind:href="info">去百度bind</a>
+   <!-- <a :href="info" :id="id">去百度</a>-->
+    <a v-bind="{id:aObject.id,href:aObject.info}">去百度：</a>
+
+</div>
+<!--v-model用于数据的绑定和数据的读取-->
+<div id="name">
+    <form action="/add">
+    用户名：<input type="text" v-model="user.username">
+    密码：<input type="password" v-model="user.password">
+    {{user}}
+    <input type="submit" value="登录">
+    </form>
+</div>
+
+<!--
+v-if数据的判断也是一样
+v-show数据的显示或隐藏
+-->
+<div id="if">
+    <span v-if="flag">显示if</span>
+    <span v-show="false">显示show</span>
+
+</div>
+<!--v-if-else if 的使用-->
+<div id="if_else">
+    <div v-if="num<5">小于5</div>
+    <div v-else-if="num>=5 && num<10">大于等于五并且小于10</div>
+    <div v-else>都不成力</div>
+</div>
+
+<!--v-for 的使用-->
+<div id="for">
+    <table>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>age</td>
+        </tr>
+        <tr v-for="item in listObject">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.age}}</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td>name</td>
+            <td>index</td>
+        </tr>
+        <!--除了index和in不能改变其他的都可以变化-->
+        <tr v-for="(item,index) in list">
+            <td>{{item}}</td>
+            <td>{{index}}</td>
+        </tr>
+    </table>
+</div>
+
+<!--ajax-->
+<div id="json">
+    {{message}}
+</div>
+
+
+
+
+
+</body>
+<script>
+   /* var app = new Vue({
+
+        el:"#app",
+        data:{
+            add:1
+        }},
+
+        { el:"#fun",
+        data:{
+            message:"嘿嘿快改变我"
+        },
+        methods:{
+            fun01:function () {
+                app.message="bibi变化"
+            }
+        }},*/
+   /*);*/
+/*
+    var keyDown = new Vue({
+        el:"#keydown",
+        data:{
+            
+        },
+        methods:{
+            fun02:function (e) {
+              console.log( "按键的值"+e.keyCode);
+              if (e.keyCode>=48 && e.keyCode<=57){
+
+              }else {
+                  //alert("请输入数字")
+                  e.preventDefault();
+              }
+            }
+        }
+    });*/
+/*
+var show = new Vue({
+    el:"#show",
+    data:{},
+    methods:{
+        fun03:function () {
+            alert("hhhh")
+        },fun04:function (e) {
+            alert("xixi")
+            e.stopPropagation();
+        }
+    }
+})
+*/
+
+/*new Vue({
+    el:"#a",
+    data:{},
+    methods:{
+        fun04:function () {
+        alert("百度")
+        }
+    }
+})*/
+/*
+new Vue({
+    el:"#text",
+    data:{},
+    methods:{
+        fun05:function () {
+             window.location.href="http://www.baidu.com";
+        }
+    }
+})*/
+/*
+new Vue({
+    el:"#el",
+    data:{
+        message:"<h1>hello world </h1>"
+    },
+    methods:{
+
+    }
+})
+*/
+// new Vue({
+//     el:"#bind",
+//     data:{
+//         aObject:{
+//             id:1,
+//             info:"http://www.baidu.com"
+//         }
+//         /*id:1,
+//         info:"http://www.baidu.com"*/
+//     },
+//     methods:{
+//
+//     }
+// })
+
+   /* new Vue({
+        el:"#name",
+        data:{
+            user:{
+                username:"张三",
+                password:"123456"
+            }
+        },
+        methods:{
+
+        }
+    })*/
+
+ /*  new Vue({
+       el:"#if",
+       data:{
+        flag:"true"
+       },
+       methods:{
+
+       }
+   })*/
+
+/* new Vue({
+     el:"#if_else",
+     data:{
+         num:5
+     }
+ })*/
+/*new Vue({
+    el:"#for",
+    data:{
+        list:["张三","李四","王五"],
+        listObject:[{"name":"zhangsan","age":99,"id":1},{"name":"lishi","age":19,"id":2}]
+    },
+    methods:{
+
+    }
+})*/
+new Vue({
+    el:"#json",
+    data:{
+        message:"hai"
+    },
+    created:function () {
+        axios.get('/js/data.json',{
+            <!--params这个是固定写法，代替？和&用于拼接参数-->
+            params:{
+                id:1,
+                name:2
+            }
+        }).then(
+            function (response) {
+                json.message=response.data
+                console.log(response.data);
+            }
+        ).catch(
+            function (error) {
+                //console.log(error);
+        });
+    }
+})
+
+</script>
+</html>
